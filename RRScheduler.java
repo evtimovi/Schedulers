@@ -5,9 +5,9 @@
 
 public class RRScheduler extends Scheduler {
 
-    private static int final QUANTUM = 5;
+    private static final int QUANTUM = 5;
     private PriorityComparator comp;
-    private quantumRemaining;//how much time the current process has remaining out of its quantum
+    private int quantumRemaining;//how much time the current process has remaining out of its quantum
 
     public RRScheduler()
     {
