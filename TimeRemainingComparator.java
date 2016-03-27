@@ -5,7 +5,7 @@
 import java.util.Comparator;
 public class TimeRemainingComparator implements Comparator<Process>{
     public int compare(Process o1, Process o2){
-        return 0;
+        return o1.timeRemaining() - o2.timeRemaining();
     }
 
     public boolean equals(Object obj){
