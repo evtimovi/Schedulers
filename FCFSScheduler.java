@@ -3,16 +3,22 @@
  * @author Renan Dincer and Ivan Evtimov
  */
 
+import java.util.PriorityQueue;
+
 public class FCFSScheduler extends Scheduler {
-    private ArrivalTimeComparator comp;
 
     public FCFSScheduler()
     {
-
+       current = null;
+       rq = new PriorityQueue<Process>(new ArrivalTimeComparator()); 
     }
 
     public boolean contextSwitchable()
     {
-        return true;   
+        if (current == null)
+        {
+            return true;
+        }
+        return false;   
     }
 }

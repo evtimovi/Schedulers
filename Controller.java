@@ -10,7 +10,7 @@ public class Controller{
         
     private static PriorityQueue<Process> fq;//future queue - processes that have not arrived yet
     private static Scheduler scheduler;
-    private static ArrayList<Process> doneQ; //all processes that are done
+    private static ArrayList<Process> doneQ = new ArrayList<Process>(); //all processes that are done
     private static double awt = 0;
     private static double awwt = 0;
     private static double art = 0;
@@ -88,6 +88,7 @@ public class Controller{
             readFile(file);
         } catch (IOException e){
             System.out.println ("IO Exception occured when reading the input file. Exiting...");
+            System.out.println(e);
             System.exit(1);
         }
         
@@ -118,7 +119,7 @@ public class Controller{
         }
 
         // most hardcore for loop we've written
-        for (int time = 0; numProcesses == doneQ.size(); time++){
+        for (int time = 0; numProcesses != doneQ.size(); time++){
             timestep(time);
         }
 
