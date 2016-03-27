@@ -16,7 +16,7 @@ public abstract class Scheduler {
     /*
      * Puts the processes that come from the system outside of our control (future queue) into the ready queue to be called in the beginning of each timestep.
      */
-    public void arrive(Process[] newarrivals){}
+    public void arrive(Process newArrival){}
 
     public Process preempt(){
         return null;
