@@ -41,7 +41,17 @@ public class Controller{
         }
     }
 
-    public static void printStats(){}
+    public static void printStats(){
+        System.out.print("Average waiting time is:");
+        System.out.println(awt);
+        System.out.print("Average weighted waiting time is:");
+        System.out.println(awwt);
+        System.out.print("Average response time is:");
+        System.out.println(art);
+        System.out.print("Average weighted response time is:");
+        System.out.println(awrt);
+
+    }
 
     public static void main(String[] args){
         String file = args[1];
