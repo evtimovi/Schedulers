@@ -11,6 +11,10 @@ public class Controller{
     private static PriorityQueue<Process> fq;//future queue - processes that have not arrived yet
     private static Scheduler scheduler;
     private static ArrayList<Process> doneQ; //all processes that are done
+    private static double awt = 0;
+    private static double awwt = 0;
+    private static double art = 0;
+    private static double awrt = 0;
 
     public static void readFile(String file) throws IOException{
         fq = new PriorityQueue<Process>(10, new ArrivalTimeComparator());
@@ -31,7 +35,7 @@ public class Controller{
     }
 
     public static void timestep(int time){
-        while (fq.size() > 0 && fq.peek().arrivalTime == time){
+        while (fq.size() > 0 && fq.peek().arrivalTime() == time){
             scheduler.arrive( fq.poll() );
         }
 
@@ -42,6 +46,7 @@ public class Controller{
     }
 
     public static void printStats(){
+        calculateStats();
         System.out.print("Average waiting time is:");
         System.out.println(awt);
         System.out.print("Average weighted waiting time is:");
@@ -51,6 +56,29 @@ public class Controller{
         System.out.print("Average weighted response time is:");
         System.out.println(awrt);
 
+    }
+
+    private static void calculateStats()
+    {
+        awt = 0;
+        awwt = 0;
+        art = 0;
+        awrt = 0;
+
+        double n = (double) doneQ.size(); 
+        double sumPriority = 0;
+
+        for( Process proc : doneQ )
+        {
+            awt += proc.waitTime() / n; //unweighted average
+            sumPriority += (double) proc.origPriority();
+            awwt += proc.waitTime() * proc.origPriority(); // will be divided by sumPriority at the end
+            art += proc.responseTime() / n; //average response time 
+            awrt += proc.responseTime() * proc.origPriority(); //average weighted response time (technically, just the weighted sum for now)
+        }
+
+        awwt /= sumPriority;
+        awrt /= sumPriority;
     }
 
     public static void main(String[] args){
