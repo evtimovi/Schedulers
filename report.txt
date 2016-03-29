@@ -1,0 +1,46 @@
+# Problem We're Trying to Solve
+Schedulers are an important piece of software in the operating system. They work to reach an optimal desired performance while staying in the performance limits of the CPU. Each scheduler is fit to a different task and user expectations. Priority based schedulers, for example work best when there are tasks that are of various levels of importance (like graphical user interfaces vs batch processes). First come first serve schedulers work well when jobs are expected to queue up and keep their order. Schedulers solve the problem of not enough CPU time when the demand is high.
+
+# Description of code design and data structures, how each scheduler works
+Our scheduler is managed by the controller, which is our main class to start our simulation from. The controller keeps track of the passage of time, and the processes that will arrive in the future to the scheduler. It reads the file and writes the stats. The controller file is started this way:
+
+```
+>> make
+>> java Controller fcfs fcfs.txt
+```
+
+The contoller creates new schedulers depending on the imput from the user. The default case in the switch statement is the custom scheduler we have designed.
+
+The controller class keeps track of all the incoming processes by putting them in a Priority Queue. In each time period, new processes are passesed to the scheduler and scheduler returns done processes if there are any. These done processes are added to a Array List called doneQ which keeps track of all the done processes. When the total number of added processes is equal to the number of done processes, the clock stops working and the stats are printed out.
+
+We have created a abstract Scheduler class for all types of Schedulers to inherit from. This abstract class provides a shared run method that is called in each timestep and handles the preemptition, updating of the PCBs in both in the ready queue and the process in the CPU. It also defines defaults for premptition rules and when to make a context switch using the contextSwitichable method.
+
+The schedulers establish custom behavior by overriding the 'rq' (ready queue) priority queue comparator and contextSwitchable, updateCurrent, updateRQ, preempt methods. Not all methods are used or overriden in all schedulers, but the scheduler abstract class provides a basic structure and functions a scheduler uses.
+
+FCFS scheduler works by using the ArrivalTimeComparator that compares the arrival time of processes. It does not preempt, so the contextSwithcable method returns false all the time except when there is no process in the CPU (CPU is idle).
+
+Nonpreprior scheduler uses the priority comparator, doesn't preempt and updates all the elements in the ready queue after their priority is increased every time perid because of aging.
+
+Preprior scheduler works also using the priority comparator but context switches if there is a higher priority process waiting at the top of the ready queue in each time period. The process that is preempted is added back to the ready queue for later consideration in similar fashion.
+
+In round robin scheduler, a comparator that always returns '0'(which means the processes are equal) is used. This allows the priority queue to run in a simple queue style as the preempted processes are added to the back of the line as long as there are more than one process in the scheduler.
+
+The SJFS scheduler runs by using the burst time comparator and is fairly basic at it doesn't preempt.
+
+SRTF scheduler compares using the time remaining comparator and context switches similar to the priority comparator where if there is a shorter job, context switch is performed.
+
+Our custom scheduler is a last come first served scheduler. It guarantees the fastest response time.
+
+All of these schedulers are implemented using priority queues with different comparators that push processes up the queue in different order. Since all comparators compare in one criteria, ties are broken using the position in the text file. All schedulers uses the following comparators:
+AntiArrivalTimeComparator: Last come highest priority
+ArrivalTimeComparator: First come highest priority
+BullshitComparator: All the same priority (everyone gets a chance)
+BurstTimeComparator: Smallest job is highest priority
+PriorityComparator: Largest priority has highest priority
+TimeRemainingComparator: Shortest time remaining highest priority
+
+# Appendix
+We were in charge of all details in the project together and used pair coding (two people on one monitor). We took turns in typing as we went along. We split up when typing up the report and worked on each section seperately.
+
+# References
+No references - thanks to java api
