@@ -1,11 +1,13 @@
 /**
- * Compares two processes based on their prioritty
+ * Compares two processes based on their arrival time
  * @author Renan Dincer and Ivan Evtimov
  */
+
 import java.util.Comparator;
-public class PriorityComparator implements Comparator<Process>{
+
+public class BullshitComparator implements Comparator<Process>{
     public int compare(Process o1, Process o2){
-        return o2.priority() - o1.priority();
+        return 0;
     }
 
     public boolean equals(Object obj){
