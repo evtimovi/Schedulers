@@ -24,7 +24,7 @@ public abstract class Scheduler {
         
         if(current == null){
             //the cpu is idle
-            System.out.println("Time " + time + ", the processor is idle");
+            //System.out.println("Time " + time + ", the processor is idle");
         } else {
             System.out.println("Time: " + time + ", process " + current.pid() + " running");
         }

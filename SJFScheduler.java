@@ -2,17 +2,21 @@
  * Scheduler that implements the shortest job first scheduling algo.
  * @author Renan Dincer and Ivan Evtimov
  */
+import java.util.PriorityQueue;
 
 public class SJFScheduler extends Scheduler {
-    private BurstTimeComparator comp;
 
     public SJFScheduler()
     {
-
+		current = null;
+		rq = new PriorityQueue<Process>(new BurstTimeComparator());
     }
 
     public boolean contextSwitchable()
     {
-        return true;   
+		if (current == null){
+			return true;
+		}
+        return false;   
     }
 }
