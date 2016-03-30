@@ -17,7 +17,7 @@ public class PrepriorScheduler extends Scheduler {
 			return true;
 		}
 		Process temp = rq.peek();
-		if (temp == null || current.priority() < temp.priority()){
+		if (temp == null || current.priority() > temp.priority()){
 			return false;
 		} else {
 			return true;
