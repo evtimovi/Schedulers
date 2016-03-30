@@ -5,7 +5,7 @@
 import java.util.PriorityQueue;
 public class RRScheduler extends Scheduler {
 
-    private static final int QUANTUM = 1;
+    private static final int QUANTUM = 30;
     private PriorityComparator comp;
     private int quantumRemaining;//how much time the current process has remaining out of its quantum
 
